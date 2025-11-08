@@ -10,7 +10,7 @@ This package provides functionality for:
 """
 
 __version__ = "1.0.0"
-__author__ = "RIPTIDAL Contributors"
+__author__ = "ishumilin"
 __license__ = "MIT"
 
 # Package metadata

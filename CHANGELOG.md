@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+- **Backend**: Automatic API key fallback during device login when the current client is invalid (401 invalid_client).
+
+### Changed
+- **Backend**: Packaging configuration corrected (console script to `riptidal.main:main_cli`, package discovery updated to include `riptidal.*`).
+- **Backend**: Version alignment to `1.0.0` across runtime and distribution metadata.
+- **Backend**: `main.py` now imports `__version__` from the package instead of hardcoding.
+
+### Fixed
+- **Backend**: Resolved “Cannot combine AUTHORIZATION header with AUTH argument” by avoiding Bearer token on OAuth endpoints or when using BasicAuth.
+- **Backend**: Added missing dependency `requests` to project dependencies to support API key updates.
+
 ## [1.0.0] - 2025-01-09
 
 ### Added

@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "riptidal"
-version = "0.2.7"
+version = "1.0.0"
 description = "RIPTIDAL - A Python 3.12+ application for downloading music from Tidal (Personal Use Only)"
 readme = "README.md"
 authors = [
@@ -29,6 +29,7 @@ requires-python = ">=3.12"
 dependencies = [
     "aiofiles>=23.2.1",
     "aiohttp>=3.9.1",
+    "requests>=2.32.3",
     "pydantic>=2.5.2",
     "rich>=13.7.0",
     "mutagen>=1.47.0",
@@ -50,16 +51,16 @@ dev = [
 "Bug Tracker" = "https://github.com/yourusername/riptidal/issues"
 
 [project.scripts]
-riptidal = "main:main_cli"
+riptidal = "riptidal.main:main_cli"
 
 [tool.setuptools]
-package-dir = {"" = "."}
+package-dir = {"riptidal" = "."}
 packages = [
-    "api",
-    "core",
-    "ui",
-    "utils",
-    "tests"
+    "riptidal",
+    "riptidal.api",
+    "riptidal.core",
+    "riptidal.ui",
+    "riptidal.utils"
 ]
 
 [tool.black]

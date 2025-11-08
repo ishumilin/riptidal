@@ -14,7 +14,8 @@ from pathlib import Path
 
 # Add the current directory to the path so we can import the package
 current_dir = Path(__file__).parent
-sys.path.insert(0, str(current_dir))
+# Ensure Python can import the top-level 'riptidal' package by adding the parent of this directory
+sys.path.insert(0, str(current_dir.parent))
 
 # Import the main function from the package
 from riptidal.main import main

@@ -20,8 +20,7 @@ from riptidal.ui.cli import CLI
 from riptidal.utils.logger import setup_logger
 from riptidal.utils.paths import get_data_dir
 
-# Import version directly to avoid circular imports
-__version__ = "0.2.7"
+from riptidal import __version__
 
 
 def parse_arguments() -> argparse.Namespace:

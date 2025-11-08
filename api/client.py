@@ -166,7 +166,13 @@ class TidalClient:
         if headers is None:
             headers = {}
         
-        if self.login_key.accessToken and 'authorization' not in headers:
+        # Avoid attaching bearer token for auth endpoints or when explicit BasicAuth is used
+        calling_auth_service = (
+            (base_url is not None and (base_url.rstrip('/') == self.auth_url.rstrip('/')))
+            or endpoint.startswith('/token')
+            or endpoint.startswith('/device_authorization')
+        )
+        if self.login_key.accessToken and 'authorization' not in headers and not auth and not calling_auth_service:
             headers['authorization'] = f"Bearer {self.login_key.accessToken}"
         
         self.logger.debug(f"API request: {method} {url}")

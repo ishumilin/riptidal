@@ -12,6 +12,7 @@ from typing import Optional, Tuple, Dict, Any
 from riptidal.api.client import TidalClient, AuthenticationError
 from riptidal.core.settings import Settings, save_settings
 from riptidal.utils.logger import get_logger
+from riptidal.api.keys import get_all_keys
 
 
 class AuthManager:
@@ -45,9 +46,37 @@ class AuthManager:
             True if login was successful, False otherwise
         """
         try:
-            # Get device code
-            verification_url = await self.client.get_device_code()
-            
+            # Get device code (with fallback to other API keys if needed)
+            try:
+                verification_url = await self.client.get_device_code()
+            except AuthenticationError:
+                # Try to fall back to other bundled API keys if the current one is rejected (e.g., invalid_client/401)
+                self.logger.warning("Device authorization failed with current API key, attempting fallback keys...")
+                keys = get_all_keys()
+                current_idx = self.settings.api_key_index if self.settings.api_key_index is not None else -1
+                fallback_ok = False
+                for idx, key in enumerate(keys):
+                    # Skip current key; prefer keys marked valid
+                    if idx == current_idx or key.get("valid") != "True":
+                        continue
+                    self.logger.info(f"Trying fallback API key index {idx} ({key.get('platform','unknown')})")
+                    # Update client credentials and settings to this key
+                    self.client.api_key = {
+                        "clientId": key["clientId"],
+                        "clientSecret": key["clientSecret"],
+                    }
+                    self.settings.api_key_index = idx
+                    try:
+                        verification_url = await self.client.get_device_code()
+                        # Persist the selected key immediately; login will still need to complete
+                        save_settings(self.settings)
+                        fallback_ok = True
+                        break
+                    except AuthenticationError:
+                        continue
+                if not fallback_ok:
+                    raise
+        
             # Display instructions to the user
             print("\n=== Tidal Authentication ===")
             print(f"1. Open this URL in your browser: {verification_url}")
