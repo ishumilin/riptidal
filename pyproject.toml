@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "riptidal"
-version = "1.0.0"
+version = "1.0.1"
 description = "RIPTIDAL - A Python 3.12+ application for downloading music from Tidal (Personal Use Only)"
 readme = "README.md"
 authors = [

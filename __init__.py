@@ -9,7 +9,7 @@ This package provides functionality for:
 - Simplified CLI menu interface
 """
 
-__version__ = "1.0.0"
+__version__ = "1.0.1"
 __author__ = "ishumilin"
 __license__ = "MIT"
 
