@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
 Run script for RIPTIDAL.
@@ -12,9 +12,9 @@ import sys
 import os
 from pathlib import Path
 
-# Add the parent directory to the path so we can import the package
-parent_dir = Path(__file__).parent.parent
-sys.path.insert(0, str(parent_dir))
+# Add the current directory to the path so we can import the package
+current_dir = Path(__file__).parent
+sys.path.insert(0, str(current_dir))
 
 # Import the main function from the package
 from riptidal.main import main
